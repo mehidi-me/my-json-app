@@ -8,23 +8,17 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="wrapper">
+
         <div id="header">
             <h1>Crud</h1>
         </div>
         <div id="menu">
             <ul>
                 <li>
-                    <a href="index.php">Home</a>
+                    <a href="index.html">Home</a>
                 </li>
                 <li>
-                    <a href="add.php">Add</a>
-                </li>
-                <li>
-                    <a href="update.php">Update</a>
-                </li>
-                <li>
-                    <a href="delete.php">Delete</a>
+                    <a href="add.html">Add</a>
                 </li>
             </ul>
         </div>
@@ -32,72 +26,75 @@
     <h2>All Records</h2>
     <table cellpadding="7px">
         <thead>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Class</th>
-        <th>Phone</th>
-        <th>Action</th>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Image Link</th>
+            <th>Description</th>
+            <th>Action</th>
         </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Ramesh</td>
-                <td>Delhi</td>
-                <td>BCA</td>
-                <td>9876543210</td>
-                <td>
-                    <a href='edit.php'>Edit</a>
-                    <a href='delete-inline.php'>Delete</a>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Suresh</td>
-                <td>Punjab</td>
-                <td>BCOM</td>
-                <td>9876543210</td>
-                <td>
-                    <a href='edit.php'>Edit</a>
-                    <a href='delete-inline.php'>Delete</a>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Suresh</td>
-                <td>Haryana</td>
-                <td>BSC</td>
-                <td>9876543210</td>
-                <td>
-                    <a href='edit.php'>Edit</a>
-                    <a href='delete-inline.php'>Delete</a>
-                </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Krishna</td>
-                <td>Gujrat</td>
-                <td>BCA</td>
-                <td>9876543210</td>
-                <td>
-                    <a href='edit.php'>Edit</a>
-                    <a href='delete-inline.php'>Delete</a>
-                </td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Rohit</td>
-                <td>Delhi</td>
-                <td>BCA</td>
-                <td>9876543210</td>
-                <td>
-                    <a href='edit.php'>Edit</a>
-                    <a href='delete-inline.php'>Delete</a>
-                </td>
-            </tr>
+        <tbody id="main">
+
+           <!-- Load json data -->
+
+
         </tbody>
     </table>
 </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    let main = document.getElementById("main");
+
+
+function makeHtmlElement(id, title, imageLink, description){
+
+let tr = document.createElement("tr")
+let td = document.createElement("td")
+let td2 = document.createElement("td")
+let td3 = document.createElement("td")
+let td4 = document.createElement("td")
+let td5 = document.createElement("td")
+let a = document.createElement("a")
+let a2 = document.createElement("a")
+
+
+a.setAttribute('href', 'hello')
+a2.setAttribute('href', 'hello')
+td.innerText = id
+td2.innerText = title
+td3.innerText = imageLink
+td4.innerText = description
+a.innerText = 'Edit'
+a2.innerText = 'delete'
+
+main.appendChild(tr)
+tr.appendChild(td)
+tr.appendChild(td2)
+tr.appendChild(td3)
+tr.appendChild(td4)
+tr.appendChild(td5)
+td5.appendChild(a)
+td5.appendChild(a2)
+}
+
+function dataLoad(){
+    fetch('http://localhost/MyApi/api/read.php').then(res => res.json())
+.then(json => {
+json.body.forEach(post => {
+    makeHtmlElement(post.id, post.title, post.image_link, post.description.substr(0,30))
+});
+})
+}
+dataLoad()
+</script>
 </body>
 </html>
