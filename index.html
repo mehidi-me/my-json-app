@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <div class="container" id="main"></div>
+    <div id="load-html">
+        <div class="container" id="main"></div>
+    </div>
 
-
+<a href="index.html" style="position: fixed;font-size: 100px;z-index: 999;">back to home</a>
     <script>
         let main = document.getElementById("main");
+        let loadHtml = document.getElementById("load-html");
 
 
 function makeHtmlElement(img_link, title , pra, id){
@@ -47,6 +50,47 @@ fetch('http://localhost/MyApi/api/read.php').then(res => res.json())
         makeHtmlElement(post.image_link, post.title , post.description.substr(0,30), post.id)
     });
 })
+
+
+window.addEventListener('popstate', function (event) {
+    if (history.state && history.state.id === 'homepage') {
+        browser.history.deleteAll()
+    }else{
+        window.location.assign('http://127.0.0.1:5500/index.html')
+    }
+}, false);
+
+// my functin
+
+function myfunc(id){
+    fetch(`http://localhost/MyApi/api/single_read.php/?id=${id}`).then(res => res.json())
+.then(json => {
+    let divm = document.createElement("div")
+    let div1 = document.createElement("div")
+    let div2 = document.createElement("div")
+    let h1 = document.createElement("h1")
+    let p = document.createElement("p")
+
+    div1.className = 'image-title'
+    div2.className = 'pra'
+    div1.style.background = `linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)), url(${json.image_link}) center center / cover no-repeat`
+    h1.innerHTML = json.title
+    p.innerHTML = json.description
+
+    div1.appendChild(h1)
+    div2.appendChild(p)
+    divm.appendChild(div1)
+    divm.appendChild(div2)
+
+  loadHtml.innerHTML = divm.innerHTML
+//   history.pushState({
+//     id: 'homepage'
+// }, 'post details', `http://127.0.0.1:5500/post/${json.title}`);
+
+document.title = 'Post details page'
+})
+    
+}
     </script>
 </body>
 </html>

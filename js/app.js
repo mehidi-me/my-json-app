@@ -11,8 +11,7 @@ fetch(`http://localhost/MyApi/api/single_read.php/?id=${id}`).then(res => res.js
 imageTitle.style.backgroundImage = `url(${json.image_link})`;
 title.innerText = json.title
 pra.innerText = json.description
-}
-)
+})
 
 
 
